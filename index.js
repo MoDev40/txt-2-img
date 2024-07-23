@@ -3,11 +3,21 @@ import { config } from "dotenv";
 import express from "express";
 import Joi from "joi";
 import { prisma, replicate } from "./config/config.js";
+import rateLimit from "express-rate-limit";
 
 config()
 
 const app = express();
 
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, 
+	limit: 5, 
+	standardHeaders: 'draft-7',
+	legacyHeaders: false,
+  message:"try again after 15minute"
+})
+
+app.use(limiter)
 app.use(cors())
 app.use(express.json())
 
