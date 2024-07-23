@@ -12,3 +12,14 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Prediction {
+  id               Int   @id @default(autoincrement())
+  error            String? 
+  input            Json
+  output           String[]
+  startedAt        DateTime 
+  status           String @default("success")
+  createdAt        DateTime @default(now()) 
+}
+
