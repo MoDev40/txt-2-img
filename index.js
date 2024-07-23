@@ -48,7 +48,7 @@ app.post("/generate",async(req,res)=>{
       scheduler: "DDIM",
       num_outputs: numOfOutput,
       guidance_scale: 0,
-      negative_prompt: "worst quality, low quality",
+      negative_prompt: "worst quality, low quality,blurry,distorted,",
       num_inference_steps: 4
     }
     const output = await replicate.run(
@@ -79,6 +79,11 @@ app.post("/generate",async(req,res)=>{
   } catch (error) {
     res.status(500).json({error})
   }
+})
+
+app.get("/predictions",async(req,res)=>{
+  const predictions = await prisma.prediction.findMany()
+  res.status(200).json(predictions)
 })
 app.listen(8000,()=>{
     console.log("connected")
