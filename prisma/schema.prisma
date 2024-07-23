@@ -9,16 +9,15 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Prediction {
-  id               Int   @id @default(autoincrement())
+  id               String @default(auto()) @id @map("_id") @db.ObjectId
   error            String? 
   input            Json
   output           String[]
-  startedAt        DateTime 
   status           String @default("success")
   createdAt        DateTime @default(now()) 
 }
